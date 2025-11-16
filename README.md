@@ -13,7 +13,7 @@
 
 - Додавання та оновлення контакту з кількома телефонами
 - Комплексна команда `change` для оновлення імені, телефону, адреси, дня народження або email
-- Пошук контакту за номером телефону
+- Пошук телефону за іменем контакту
 - Показ усіх контактів
 - Додавання й перегляд дня народження
 - Нагадування про дні народження протягом 7 днів та пошук «через N днів»
@@ -104,7 +104,7 @@ python -m cli_bot
 | `hello`                                                              | Вітання.                                                                                          |
 | `add <name> <phone>`                                                 | Додати або оновити контакт; номер додається до вказаного запису.                                  |
 | `change <name> name\|phone\|address\|birthday\|email [старе] <нове>` | Оновити конкретне поле контакту; для телефонів та email необхідно передати старе й нове значення. |
-| `phone <phone_number>`                                               | Показати контакт, який містить цей номер телефону.                                                |
+| `phone <name>`                                                       | Показати всі телефони контакту з указаним ім’ям телефону.                                                |
 | `all`                                                                | Показати всі контакти.                                                                            |
 | `all-table`                                                          | Показати всі контакти у вигляді таблиці.                                                          |
 | `add-birthday <name> <DD.MM.YYYY>`                                   | Додати або оновити день народження.                                                               |
@@ -145,13 +145,31 @@ python -m cli_bot
 FinalProject-CLI_bot/
 │
 ├── cli_bot/
-│   ├── __init__.py          # Метадані пакета
-│   ├── __main__.py          # Підтримка python -m cli_bot
-│   ├── main.py              # Головний CLI-інтерфейс
-│   └── commands/            # Команди та логіка (contacts.py, notes.py тощо)
+│   ├── __init__.py
+│   ├── __main__.py          # Точка входу при запуску через python -m cli_bot
+│   ├── main.py              # Основна логіка CLI (всюди кольори, підказки, цикл команд)
+│   │
+│   ├── commands/            # Усі функції-команди
+│   │   ├── __init__.py
+│   │   ├── address_book.py  # Класи Field, Name, Phone, Record, AddressBook
+│   │   ├── all_table.py     # Табличний вивід контактів
+│   │   ├── birthdays_in.py  # Логіка birthdays-in
+│   │   ├── contacts.py      # add, change, show-all, phone (оновлений), видалення, email, name
+│   │   ├── decorator.py     # input_error
+│   │   ├── help_text.py     # Текст команди help
+│   │   ├── note_book.py     # Класи Note та NoteBook
+│   │   ├── notes.py         # add-note, delete-note, find-note, add-tags
+│   │   ├── parser.py        # Функція parse_input
+│   │   └── storage.py       # Збереження та завантаження pickle-файлів
+│   │
+│   ├── data/                # Автоматично створюється
+│   │   ├── addressbook.pkl  # Збережені контакти
+│   │   └── notes.pkl        # Збережені нотатки
 │
-├── pyproject.toml           # Налаштування пакета (setuptools)
-└── README.md                # Документація
+├── pyproject.toml           # Налаштування пакування
+├── README.md                # Документація
+└── requirements.txt         # Залежності
+
 ```
 
 Під час роботи застосунок створює файли `addressbook.pkl` та `notes.pkl` у папці `~/.cli_bot/` (або у теці з `CLI_BOT_DATA_DIR`, якщо змінну встановлено).
