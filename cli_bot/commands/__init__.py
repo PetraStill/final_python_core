@@ -1,3 +1,23 @@
+"""Головний модуль експорту команд та класів CLI-асистента.
+
+Цей файл об’єднує всі основні компоненти застосунку та визначає __all__,
+щоб забезпечити зручний імпорт функцій, класів та утиліт в інших частинах
+програми.
+
+Експортує:
+- Команди для роботи з контактами (add, change, phone, all, delete тощо)
+- Команди для роботи з email, адресою та днями народження
+- Команди роботи з нотатками (add-note, find-note, edit-note, теги тощо)
+- Допоміжні утиліти: парсер команд, декоратор обробки помилок
+- Класи AddressBook, Record, NoteBook
+- Модулі збереження та завантаження даних
+- Табличний вивід контактів та пошук днів народження через N днів
+
+Метою цього модуля є централізація імпорту та створення
+зручного публічного інтерфейсу для всього CLI-пакета.
+"""
+
+
 from .contacts import add_contact,change_contact,show_phone,show_all,add_birthday,show_birthday, birthdays, add_address, add_email, delete_contact, find_by_email, find_by_name
 from .parser import parse_input
 from .decorator import input_error
